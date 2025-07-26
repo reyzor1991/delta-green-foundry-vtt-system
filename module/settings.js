@@ -35,7 +35,7 @@ const SettingForm = class extends HandlebarsApplicationMixin(ApplicationV2) {
     id: `${DG.ID}-setting-form`,
     classes: [DG.ID, "settings-menu"],
     window: {title:  ``, resizable: true},
-    position: {width: 500, height: 400},
+    position: {width: 500, height: 'auto'},
     actions: {},
     form: {
       handler: this.onSubmit,
@@ -111,6 +111,17 @@ class HandlerSettings extends SettingForm {
         requiresReload: true,
         type: Boolean,
         default: false,
+      },
+      skillImprovementFormula: {
+        type: String,
+        choices: {
+          // If choices are defined, the resulting setting will be a select menu
+          1: game.i18n.localize("DG.Settings.skillImprovementFormula.1"),
+          "1d3": game.i18n.localize("DG.Settings.skillImprovementFormula.2"),
+          "1d4": game.i18n.localize("DG.Settings.skillImprovementFormula.3"),
+          "1d4-1": game.i18n.localize("DG.Settings.skillImprovementFormula.4"),
+        },
+        default: "1d4",
       }
     };
   }
@@ -165,26 +176,6 @@ export default function registerSystemSettings() {
     requiresReload: true,
     type: Boolean,
     default: false,
-  });
-
-  game.settings.register("deltagreen", "skillImprovementFormula", {
-    name: game.i18n.localize("DG.Settings.improvementroll.name"),
-    hint: game.i18n.localize("DG.Settings.improvementroll.hint"),
-    scope: "world", // This specifies a world-stored setting
-    config: true, // This specifies that the setting appears in the configuration view
-    type: String,
-    choices: {
-      // If choices are defined, the resulting setting will be a select menu
-      1: game.i18n.localize("DG.Settings.improvementroll.1"),
-      "1d3": game.i18n.localize("DG.Settings.improvementroll.2"),
-      "1d4": game.i18n.localize("DG.Settings.improvementroll.3"),
-      "1d4-1": game.i18n.localize("DG.Settings.improvementroll.4"),
-    },
-    default: "1d4", // The default value for the setting, per the most recent errata.
-    onChange: (value) => {
-      // A callback function which triggers when the setting is changed
-      // console.log(value)
-    },
   });
 
   // obsolete - will be removed at some point
