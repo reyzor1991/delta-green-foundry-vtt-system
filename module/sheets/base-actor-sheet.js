@@ -111,6 +111,13 @@ export default class DGActorSheet extends DGSheetMixin(ActorSheetV2) {
     if (this.actor.type === "agent") options.parts.push("tabs", "bio");
   }
 
+  /** @override */
+  async _onFirstRender(context, options) {
+    await super._onFirstRender(context, options);
+
+    this._setRightClickListeners();
+  }
+
   /** @override - Manipulate which TABS are rendered. */
   _prepareTabs(group) {
     const tabs = super._prepareTabs(group);
@@ -132,8 +139,6 @@ export default class DGActorSheet extends DGSheetMixin(ActorSheetV2) {
       this.setPosition({ height: "auto" });
       this.setPosition({ height: Number.parseInt(this.element.style.height) });
     }
-
-    this._setRightClickListeners();
 
     const handler = (ev) => this._onDragStart(ev);
     element.querySelectorAll("li.item").forEach((li) => {
